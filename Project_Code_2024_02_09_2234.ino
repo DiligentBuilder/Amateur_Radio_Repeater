@@ -3,24 +3,30 @@
 #include "phoneticAlphabet.h"
 
 const byte ledPin = 13;
-const byte estPin = 3;
+const byte estPin = 2;
 const byte interruptPin = 5;
+
+// defining constants for Q digital pin numbers
+const byte Q1_pin = 3;
+const byte Q2_pin = 4;
+const byte Q3_pin = 7;
+const byte Q4_pin = 8;
 
 // action states for interrupts
 volatile byte state = LOW;
-volatile boolean actionState = LOW;
+volatile int actionState = LOW;
 
 // variable for adjustable time delay
-const int tdelayadjustable = 30;
+const int tdelayadjustable = 100;
 
 
 // declare variables for decoding
-bool Q1_state;
-bool Q2_state;
-bool Q3_state;
-bool Q4_state;
+volatile bool Q1_state;
+volatile bool Q2_state;
+volatile bool Q3_state;
+volatile bool Q4_state;
 
-int decimal_value;
+volatile int decimal_value;
 
 String digit_string;
 
@@ -45,50 +51,15 @@ void busy() {
   digitalWrite(ledPin, state);
 }
 
-void decodeDTMF() {
-      // change action state of interrupt for decodeDTMF
-      actionState != actionState;
-      
-      // DTMF Decoding Code
 
-      // wait the adjustable time delay
-      delay(tdelayadjustable);
-      
-
-      //bool ESt_state = digitalRead(3);
-
-      Q1_state = digitalRead(2);
-      Q2_state = digitalRead(4);
-      Q3_state = digitalRead(7);
-      Q4_state = digitalRead(8);
-
-      // Calculate the decimal value
-      decimal_value = 0;
-      if (Q4_state) decimal_value += 8; // Q4 represents 8
-      if (Q3_state) decimal_value += 4; // Q3 represents 4
-      if (Q2_state) decimal_value += 2; // Q2 represents 2
-      if (Q1_state) decimal_value += 1; // Q1 represents 1
-
-      // Convert the decimal value to a string and send it over serial
-      digit_string = String(decimal_value);
-
-      // LCD code, print the string of digits onto the LCD display
-
-      lcd.clear();
-      lcd.setCursor(0,0);
-      lcd.print(digit_string);
-      lcd.setCursor(0,1);
-      lcd.print("Interrupt detected!");
-      delay(2000); // pause for 2 s (2000 ms)
-}
 
 void setup() {
   // set input pins
-  pinMode(2, INPUT);     // Q1 from DTMF chip
-  pinMode(estPin, INPUT);     // ESt from DTMF chip
-  pinMode(4, INPUT);     // Q2 from DTMF chip
-  pinMode(7, INPUT);     // Q3 from DTMF chip
-  pinMode(8, INPUT);     // Q4 from DTMF chip
+  pinMode(Q1_pin, INPUT);     // Q1 from DTMF chip
+  pinMode(estPin, INPUT_PULLUP);     // ESt from DTMF chip
+  pinMode(Q2_pin, INPUT);     // Q2 from DTMF chip
+  pinMode(Q3_pin, INPUT);     // Q3 from DTMF chip
+  pinMode(Q4_pin, INPUT);     // Q4 from DTMF chip
 
   pinMode(9, OUTPUT);   // enable transmit relay
 
@@ -120,6 +91,7 @@ void setup() {
   lcd.setCursor(2,1);   // Move cursor to character 2 on line 1
   lcd.print("to begin.");
 }
+
 
 void loop() {
 
@@ -153,6 +125,8 @@ void loop() {
 //      lcd.print(digit_string);
       lcd.setCursor(0, 1);
       //lcd.print(ESt_state);
+
+      lcd.print("--");
       
       delay(100); // pause for 0.2 s (200 ms)
 
@@ -165,6 +139,58 @@ void loop() {
       // delay(3000);
       // digitalWrite(9, LOW);
       // delay(5000);
+
+      if (actionState == HIGH) {
+
+        lcd.clear();
+        
+        lcd.setCursor(0,0);
+        lcd.print("Interrupt detected!");
+
+        // DTMF Decoding Code
+
+        // wait the adjustable time delay
+        delay(tdelayadjustable);
+     
+
+        //bool ESt_state = digitalRead(3);
+
+        Q1_state = digitalRead(Q1_pin);
+        Q2_state = digitalRead(Q2_pin);
+        Q3_state = digitalRead(Q3_pin);
+        Q4_state = digitalRead(Q4_pin);
+
+        // Calculate the decimal value
+        decimal_value = 0;
+        if (Q4_state) decimal_value += 8; // Q4 represents 8
+        if (Q3_state) decimal_value += 4; // Q3 represents 4
+        if (Q2_state) decimal_value += 2; // Q2 represents 2
+        if (Q1_state) decimal_value += 1; // Q1 represents 1
+
+        // Convert the decimal value to a string and send it over serial
+        digit_string = String(decimal_value);
+
+        // LCD code, print the string of digits onto the LCD display
+        
+        lcd.setCursor(0,1);
+        lcd.print(digit_string);
+
+        
+        delay(2000); // pause for 2 s (2000 ms)
+
+        actionState = LOW;
+
+      }
+
+      
+}
+
+
+void decodeDTMF() {
+//      // change action state of interrupt for decodeDTMF
+        actionState = !actionState;
+//      
+//      
 
       
 }
