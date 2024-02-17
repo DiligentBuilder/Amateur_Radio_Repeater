@@ -42,6 +42,13 @@ char[bufferSize] buffer;
 int bufferPosition = 0;
 
 
+// fifteen second counter
+// this counter starts at 0 and goes until the count is high enough for 15 seconds
+// this counter is for the refreshing of the buffer to clear itself after around 
+// 15 seconds to "forget" the user input after a certain amount of time
+int FifteenSecondCounter = 0;
+
+
 
 
 
@@ -239,6 +246,17 @@ void loop() {
 
         actionState = LOW;
 
+      }
+
+      // increment the fifteen second counter by one
+      fifteenSecondCounter++;
+
+      // check if the fifteen seconds has passed yet
+      // loop delays by 100 ms each time, so the time has reached 15 seconds when the count has reached 150
+      if (count >= 150) {
+        fifteenSecondCounter = 0;
+        clearBuffer();
+        
       }
 
       
