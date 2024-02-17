@@ -144,12 +144,16 @@ void setup() {
 }
 
 String returnBufferContents() {
+
   char[bufferSize + 1] bufferPlusTerminator;
+
   for (i = 0; i < bufferSize; i++) {
     bufferPlusTerminator[i] = buffer[i];
   }
+  
   bufferPlusTerminator[bufferSize] = '\0';
 
+  return String(bufferPlusTerminator);
 
 }
 
