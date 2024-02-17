@@ -7,6 +7,7 @@ const byte estPin = 2;
 const byte interruptPin = 5;
 
 const int bufferSize = 10;
+const int bufferSizePlusOne = bufferSize + 1;
 
 // defining constants for Q digital pin numbers
 const byte Q1_pin = 3;
@@ -31,11 +32,11 @@ volatile bool Q4_state;
 
 volatile int decimal_value;
 
-volatile String digit_string;
+String digit_string;
 
 // define variable for buffer
 
-char[bufferSize] buffer;
+char buffer[bufferSize];
 
 // the buffer position starts at 0, and it gets incremented every time a character is added to the buffer
 
@@ -46,7 +47,7 @@ int bufferPosition = 0;
 // this counter starts at 0 and goes until the count is high enough for 15 seconds
 // this counter is for the refreshing of the buffer to clear itself after around 
 // 15 seconds to "forget" the user input after a certain amount of time
-int FifteenSecondCounter = 0;
+int fifteenSecondCounter = 0;
 
 
 
@@ -145,9 +146,9 @@ void setup() {
 
 String returnBufferContents() {
 
-  char[bufferSize + 1] bufferPlusTerminator;
+  char bufferPlusTerminator[bufferSizePlusOne];
 
-  for (i = 0; i < bufferSize; i++) {
+  for (int i = 0; i < bufferSize; i++) {
     bufferPlusTerminator[i] = buffer[i];
   }
   
@@ -241,8 +242,8 @@ void loop() {
         lcd.setCursor(0,1);
         lcd.print(digit_string);
 
-        // add the digit char onto the buffer
-        addCharToBuffer(digit_string);
+        // add the digit as a CHAR onto the buffer
+        addCharToBuffer(char(decimal_value));
 
 
         
@@ -257,7 +258,7 @@ void loop() {
 
       // check if the fifteen seconds has passed yet
       // loop delays by 100 ms each time, so the time has reached 15 seconds when the count has reached 150
-      if (count >= 150) {
+      if (fifteenSecondCounter >= 150) {
         fifteenSecondCounter = 0;
         clearBuffer();
         
@@ -274,3 +275,5 @@ void decodeDTMF() {
 //      
 //      
 
+      
+}
