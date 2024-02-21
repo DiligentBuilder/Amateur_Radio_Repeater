@@ -5,24 +5,16 @@ const byte ledPin = 13;
 
 SoftwareSerial mySerial(2, 1); // RX, TX
 
-
-
 LiquidCrystal_I2C lcd(0x27,16,2);  // I2C address of LCD chip is 0x27. LCD is 16 chars and 2 lines.
-
-
 
 void setup() {
   // put your setup code here, to run once:
 
   pinMode(ledPin, OUTPUT);
 
-  
-
   // Open serial communications and wait for port to open
 
   mySerial.begin(9600);
-
-  
 
 }
 
@@ -43,9 +35,9 @@ void loop() {
 
   // wait for a few seconds
 
-  // stop recording
-
   delay(10000);
+
+  // stop recording
 
   lcd.print("Stopping Recording");
 
@@ -57,9 +49,9 @@ void loop() {
     mySerial.write(cmd2[i2]);
   }
 
-  delay(5000);
+  // wait for a few seconds
 
-  
+  delay(5000);
 
   // play back our recording
 
@@ -73,13 +65,13 @@ void loop() {
     mySerial.write(cmd3[i3]);
   }
 
+  // wait for a few seconds
 
+  delay(10000);
 
   // stop the decoding
 
   lcd.print("Stopping Playback");
-
-  delay(10000);
 
   byte cmd4[] = {0xFD, 0x00, 0x01, 0x44};
 
