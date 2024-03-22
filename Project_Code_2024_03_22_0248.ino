@@ -273,6 +273,9 @@ String readStringFromEEPROM(int addrOffset)
 
 void setup() {
 
+  // set the Morse Code callsign to the callsign stored in the EEPROM non-volatile memory
+  morseCode = readStringFromEEPROM(1).c_str();
+
   // write default password to EEPROM Memory
   // writeStringToEEPROM(0, "123456");
 
@@ -488,7 +491,7 @@ void loop() {
 
                   if (buffer_string.indexOf("*") != -1) {
                     speak("Committing Morse Code to EEProm");
-                    writeStringToEEPROM(0, morse_code_string);
+                    writeStringToEEPROM(1, morse_code_string);
 
                     // we are done now
                     breakVar = 1;
