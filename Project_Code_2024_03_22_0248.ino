@@ -181,7 +181,7 @@ bool checkContentsChangePassword(String s) {
     }
 
     // check if the next six characters are numbers from 0-9
-    for (int i = 1; i < 6; i++) {
+    for (int i = 1; i <= 6; i++) {
       if (!isDigit(s[i])) {
         return false;
       }
@@ -202,10 +202,7 @@ bool checkContentsChangePassword(String s) {
       return false;
     }
 
-    return true;
-
-    
-      
+    return true;   
 }
 
 // function to check if the buffer's contents is the correct sequence of characters for the change callsign command
@@ -216,7 +213,7 @@ bool checkContentsChangeCallsign(String s) {
     }
 
     // check if the next six characters are numbers from 0-9
-    for (int i = 1; i < 6; i++) {
+    for (int i = 1; i <= 6; i++) {
       if (!isDigit(s[i])) {
         return false;
       }
@@ -243,10 +240,7 @@ bool checkContentsChangeCallsign(String s) {
       return false;
     }
 
-    return true;
-
-    
-      
+    return true;     
 }
 
 void writeStringToEEPROM(int addrOffset, const String &strToWrite)
