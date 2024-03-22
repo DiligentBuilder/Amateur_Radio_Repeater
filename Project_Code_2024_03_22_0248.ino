@@ -7,6 +7,12 @@ using namespace std;
 
 #include <EEPROM.h>
 
+// Define char arrays to hold old password and password entered by the user
+
+char old_password_chars_change_callsign[6];
+
+char old_password_entry_chars_change_callsign[6];
+
 // Define Morse Code callsign
 const char* morseCode = "-.- ...-- .- ..- -.-";
 
@@ -396,9 +402,13 @@ void loop() {
       // format for change callsign command: # x x x x x x * 0 0 1 * 
 
       if (buffer_string.length() >= 12) {
+        lcd.clear();
         // we have a string saved in the bufferString variable that is long enough to possibly be a change callsign command
         bool isChangeCallsign = false;
         isChangeCallsign = checkContentsChangeCallsign(buffer_string);
+        lcd.print(isChangeCallsign);
+
+
 
         if (isChangeCallsign) {
           // check if characters 1-6 matches the old password stored in the EEPROM
@@ -407,15 +417,71 @@ void loop() {
 
           old_password = readStringFromEEPROM(0);
 
-          char old_password_entry_chars[6];
-          old_password_entry.toCharArray(old_password_entry_chars, 7);
 
-          char old_password_chars[6];
-          old_password.toCharArray(old_password_chars, 7);
+          
+          // old_password_entry.toCharArray(old_password_entry_chars_change_callsign, 7);
+
+          
+          
+          // old_password.toCharArray(old_password_chars_change_callsign, 7);
+
+          
+          // lcd.clear();
+          // lcd.print(old_password_chars_change_callsign);
+          // delay(5000);
+
+          
+
+          // lcd.clear();
+          // lcd.print(old_password_entry_chars_change_callsign);
+          // delay(5000);
+
+          // lcd.clear();
+          // lcd.print(old_password_entry);
+          // lcd.print(old_password);
+
+          // delay(5000);
+
+          // lcd.clear();
+          // lcd.setCursor(0,0);
+          // lcd.print("Old: ");
+          // lcd.print(old_password);
+          // lcd.print(" ");
+          // lcd.print(old_password.length());
+          // delay(5000);
+
+          // lcd.setCursor(0,1);
+          // lcd.print("Ent: ");
+          // lcd.print(old_password_entry);
+          // lcd.print(" ");
+          // lcd.print(old_password_entry.length());
+          // delay(10000);
+          // lcd.clear();
+
+          // lcd.print(old_password_entry_chars_change_callsign);
+
+          // delay(3000);
+
+          // lcd.clear();
+
+          // lcd.print(old_password_chars_change_callsign);
+
+          // delay(3000);
+
+
+
+
+          // lcd.clear();
+          // lcd.print(strncmp(old_password_entry_chars_change_callsign, old_password_chars_change_callsign, 6));
+
+          // delay(5000);
 
           // check if passwords are equal
-          if (strncmp(old_password_entry_chars, old_password_chars, 6) == 0) {
+          if (old_password.compareTo(old_password_entry) == 0) {
             // passwords ARE equal!
+
+            lcd.clear();
+            lcd.print("passwords equal");
 
             // starting process of callsign changing
 
@@ -432,6 +498,10 @@ void loop() {
               speak("Enter your callsign in Morse code, using 1 for dot, 2 for dash, 3 for space, and * to end. ");
               lcd.clear();
               lcd.print("Enter callsign");
+
+              delay(10000);
+
+
 
               // user enters the callsign in Morse code into the buffer that has now been cleared
 
