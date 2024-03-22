@@ -395,7 +395,7 @@ void loop() {
       // code to check for the change callsign command
       // when the buffer string reaches 12 characters, check to see if a change callsign command was entered
 
-      // check the first twelve characters to see if i tis in the correct format for a change callsign command
+      // check the first twelve characters to see if it is in the correct format for a change callsign command
       // format for change callsign command: # x x x x x x * 0 0 1 * 
 
       if (buffer_string.length() >= 12) {
