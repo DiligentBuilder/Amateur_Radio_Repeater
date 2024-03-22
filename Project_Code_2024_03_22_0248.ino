@@ -505,6 +505,50 @@ void loop() {
               lcd.clear();              
               lcd.print("1 dot 2 dash 3 space");
 
+              if (actionState == HIGH) {
+        
+        // clear the LCD screen
+        lcd.clear();
+
+        // wait the adjustable time delay
+        delay(tdelayadjustable);
+
+        // obtain states from DTMF chip binary outputs
+        Q1_state = digitalRead(Q1_pin);
+        Q2_state = digitalRead(Q2_pin);
+        Q3_state = digitalRead(Q3_pin);
+        Q4_state = digitalRead(Q4_pin);
+
+        // Calculate the decimal value
+        decimal_value = 0;
+        if (Q4_state) decimal_value += 8; // Q4 represents 8
+        if (Q3_state) decimal_value += 4; // Q3 represents 4
+        if (Q2_state) decimal_value += 2; // Q2 represents 2
+        if (Q1_state) decimal_value += 1; // Q1 represents 1
+
+        // Convert the decimal value to a string
+        digit_string = String(decimal_value);
+
+        // overwrite string for the non-standard cases of 0, *, and #
+        if(digit_string == "10") digit_string = "0";
+        else if(digit_string == "11") digit_string = "*";
+        else if(digit_string == "12") digit_string = "#";
+
+        // print digit to LCD on bottom line
+        lcd.setCursor(0,1);
+        lcd.print(digit_string);
+
+        // add the digit to the buffer
+        addCharToBuffer(digit_string);
+
+        // print buffer contents to LCD on top line
+        lcd.setCursor(0,0);
+        lcd.print(buffer_string);
+        
+        actionState = LOW;  // reset actionState to LOW
+
+      }
+
               lcd.clear();
               lcd.print(buffer_string);
               //delay(5000);
