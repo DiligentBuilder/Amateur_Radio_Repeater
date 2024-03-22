@@ -451,7 +451,7 @@ void loop() {
                   speak(buffer_string.charAt(i));
                 }
 
-                speak("To confirm, the Morse code of your callsign that were detected is: ");
+                speak("To confirm, the Morse code of your callsign that was detected is: ");
 
                 String morse_code_string;
 
