@@ -436,6 +436,8 @@ void loop() {
 
               // prompt the user with speech prompts
               speak("Enter your callsign in Morse code, using 1 for dot, 2 for dash, 3 for space, and * to end. ");
+              lcd.clear();
+              lcd.print("Enter callsign");
 
               // user enters the callsign in Morse code into the buffer that has now been cleared
 
@@ -448,13 +450,21 @@ void loop() {
               if (buffer_string.indexOf("*") != -1) {
                 // play the digits back through the speech chip
                 speak("To confirm, the digits of your callsign that were detected are: ");
+                lcd.clear();
+                lcd.print("Callsign digits:");
+
+                delay(3000);
 
 
                 for (int i = 0; i < buffer_string.indexOf("*"); i++) {
                   speak(buffer_string.charAt(i));
+                  lcd.clear();
+                  lcd.print(buffer_string.charAt(i));
                 }
 
                 speak("To confirm, the Morse code of your callsign that was detected is: ");
+                lcd.clear();
+                lcd.print("Callsign Morse code");
 
                 String morse_code_string;
 
@@ -484,6 +494,11 @@ void loop() {
                 speak("Press # to retry");
                 speak("Press 0 to cancel");
 
+                lcd.clear();
+                lcd.print("* Confirm, # Retry, ");
+                lcd.setCursor(1, 0);
+                lcd.print("0 Cancel");
+
    
 
                 while (1) {
@@ -491,6 +506,12 @@ void loop() {
 
                   if (buffer_string.indexOf("*") != -1) {
                     speak("Committing Morse Code to EEProm");
+                    lcd.clear();
+                    lcd.print("Committing Morse ");
+                    lcd.setCursor(1, 0);
+                    lcd.print("Code to EEProm");
+
+                    
                     writeStringToEEPROM(1, morse_code_string);
 
                     // we are done now
@@ -503,6 +524,9 @@ void loop() {
 
                   if (buffer_string.indexOf("#") != -1) {
                     speak("Retrying");
+                    lcd.clear();
+                    lcd.print("Retrying");
+
 
                     // no break, will continue looping
 
@@ -516,6 +540,9 @@ void loop() {
 
                   if (buffer_string.indexOf("0") != -1) {
                     speak("Canceling");
+                    lcd.clear();
+                    lcd.print("Canceling");
+                    
 
                     // break to cancel and get out of the loop
                     breakVar = 1;
