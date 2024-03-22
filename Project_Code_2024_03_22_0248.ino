@@ -505,6 +505,12 @@ void loop() {
                     speak("Retrying");
 
                     // no break, will continue looping
+
+                    // do not set breakVar = 1
+
+                    // break out of the infinite loop
+                    break;
+
                     
                   }
 
