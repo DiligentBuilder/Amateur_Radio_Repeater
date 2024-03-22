@@ -487,19 +487,32 @@ void loop() {
 
             bool breakVar = 0;
 
+            // clearing buffer
+            addCharToBuffer("#");
+
             while (1) {
            
 
             
-              // clearing buffer
-              addCharToBuffer("#");
+             
 
               // prompt the user with speech prompts
               speak("Enter your callsign in Morse code, using 1 for dot, 2 for dash, 3 for space, and * to end. ");
               lcd.clear();
               lcd.print("Enter callsign");
+              //delay(3000);
 
-              delay(10000);
+              lcd.clear();              
+              lcd.print("1 dot 2 dash 3 space");
+
+              lcd.clear();
+              lcd.print(buffer_string);
+              //delay(5000);
+
+              //lcd.clear();
+              //lcd.print(buffer_string.indexOf("*"));
+              //delay(5000);
+
 
 
 
