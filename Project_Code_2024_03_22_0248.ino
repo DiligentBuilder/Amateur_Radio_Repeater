@@ -502,9 +502,6 @@ void loop() {
                     speak("Retrying");
 
                     // no break, will continue looping
-
-                    // break out of the infinite loop
-                    break;
                     
                   }
 
