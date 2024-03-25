@@ -754,6 +754,8 @@ void loop() {
 
                     delay(3000);
 
+                    lcd.clear();
+
                     // clear the buffer
                     addCharToBuffer("#");
 
@@ -777,6 +779,8 @@ void loop() {
                     lcd.print("Canceling");
 
                     delay(3000);
+
+                    lcd.clear();
 
                     // clear the buffer
                     addCharToBuffer("#");
