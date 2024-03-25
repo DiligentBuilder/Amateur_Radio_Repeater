@@ -486,14 +486,24 @@ void loop() {
             delay(3000);
 
             // transmit current callsign
+            transmitMorseCode(morseCode);
+
             lcd.clear();
             lcd.print("Current Callsign: ");
             lcd.setCursor(0, 1);
             lcd.print(morseCode);
             delay(3000);
+
+            // clear LCD display to declutter
+            lcd.clear();
+
             
 
-            transmitMorseCode(morseCode);
+
+            // clear buffer so transmit current callsign command doesn't automatically repeat
+            addCharToBuffer("#");
+
+            
 
 
 
@@ -816,12 +826,13 @@ void loop() {
 
                     lcd.clear();
 
-                    
-
-                    
-
-                    
+                    // writing string to non-volatile memory
                     writeStringToEEPROM(7, morse_code_string);
+
+                    // updating the callsign string variable
+                    morseCode = readStringFromEEPROM(7).c_str();
+
+                    
 
                     // clear the buffer
                     addCharToBuffer("#");
