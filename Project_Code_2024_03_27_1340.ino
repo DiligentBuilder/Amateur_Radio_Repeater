@@ -791,7 +791,7 @@ void loop() {
 
                 String morse_code_string = "";
 
-                for (int i = 0; i < buffer_string.indexOf("*"); i++) {
+                for (int i = 0; i < new_callsign_string.indexOf("*"); i++) {
                   if (new_callsign_string.charAt(i) == '1') {
                     morse_code_string += ".";
                   }
