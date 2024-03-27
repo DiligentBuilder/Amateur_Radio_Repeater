@@ -14,7 +14,7 @@ char old_password_chars_change_callsign[6];
 char old_password_entry_chars_change_callsign[6];
 
 // Define Morse Code callsign
-const char* morseCode = "-.- ...-- .- ..- -.-";
+String morseCode = "-.- ...-- .- ..- -.-";
 
 const int sphChpBaudRate = 4800;  //baud rate for speech chip
 
@@ -339,7 +339,7 @@ void setup() {
   writeStringToEEPROM(0, "999999");
 
   // set the Morse Code callsign to the callsign stored in the EEPROM non-volatile memory
-  morseCode = readStringFromEEPROM(7).c_str();
+  morseCode = readStringFromEEPROM(7);
 
   // write default password to EEPROM Memory
   // writeStringToEEPROM(0, "123456");
@@ -498,12 +498,12 @@ void loop() {
             delay(3000);
 
             // transmit current callsign
-            transmitMorseCode(morseCode);
+            transmitMorseCode(morseCode.c_str());
 
             lcd.clear();
             lcd.print("Current Callsign: ");
             lcd.setCursor(0, 1);
-            lcd.print(morseCode);
+            lcd.print(String(morseCode));
             delay(3000);
 
             // clear LCD display to declutter
@@ -923,7 +923,7 @@ void loop() {
                     writeStringToEEPROM(7, morse_code_string);
 
                     // updating the callsign string variable
-                    morseCode = readStringFromEEPROM(7).c_str();
+                    morseCode = readStringFromEEPROM(7);
 
                     
 
@@ -1116,7 +1116,7 @@ void loop() {
 
         speak("[x0][t6][v8][s6][m51][g2][h2][n1]K 3 A U K");  // send command to speech chip to say callsign
         delay(2000);
-        transmitMorseCode(morseCode);
+        transmitMorseCode(morseCode.c_str());
       }
 
       // // disable transmission after callsign has been played (~ 1 seconds for now)
