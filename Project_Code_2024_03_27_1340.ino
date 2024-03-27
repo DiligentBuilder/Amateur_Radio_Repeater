@@ -805,8 +805,16 @@ void loop() {
                   }
                 }
 
+                //Speech Synthesis Chip code
+                digitalWrite(9, HIGH);  // enable transmission on TX radio (close relay 1)
+                digitalWrite(10, HIGH);  // switch audio source to speech chip (close relay 2)
+
                 // once we have the Morse code string, we will play the Morse code back through the PWM pin on the ATMega
                 transmitMorseCode(morse_code_string.c_str());
+
+                //Speech Synthesis Chip code
+                digitalWrite(9, LOW);  // enable transmission on TX radio (close relay 1)
+                digitalWrite(10, LOW);  // switch audio source to speech chip (close relay 2)
 
                 // print the morse code on the LCD display
                 lcd.setCursor(0, 1);
