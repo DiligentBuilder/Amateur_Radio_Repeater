@@ -789,7 +789,7 @@ void loop() {
                 lcd.clear();
                 lcd.print("Callsign Morse code:");
 
-                String morse_code_string;
+                String morse_code_string = "";
 
                 for (int i = 0; i < buffer_string.indexOf("*"); i++) {
                   if (new_callsign_string.charAt(i) == '1') {
@@ -962,7 +962,7 @@ void loop() {
                     lcd.clear();
 
                     // clear the buffer
-                    addCharToBuffer("#");
+                    // addCharToBuffer("#");
 
                     // clear the new_callsign_string
                     new_callsign_string = "";
