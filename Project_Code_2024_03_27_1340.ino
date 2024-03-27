@@ -755,7 +755,7 @@ void loop() {
                   
 
 
-                  speak(String(new_callsign_string.charAt(i)));
+                  speak(String(new_callsign_string.charAt(i)).c_str());
                   lcd.print(new_callsign_string.charAt(i));
                   
                   delay(1000);
