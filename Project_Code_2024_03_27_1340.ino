@@ -732,7 +732,7 @@ void loop() {
                 digitalWrite(10, HIGH);  // switch audio source to speech chip (close relay 2)
 
                 speak("To confirm, the digits of your callsign that were detected are: ");
-                delay(2000);
+                delay(10000);
 
                 //Speech Synthesis Chip code
                 digitalWrite(9, LOW);  // enable transmission on TX radio (close relay 1)
@@ -779,7 +779,7 @@ void loop() {
 
                 speak("To confirm, the Morse code of your callsign that was detected is: ");
 
-                delay(2000);
+                delay(10000);
 
                 //Speech Synthesis Chip code
                 digitalWrite(9, LOW);  // enable transmission on TX radio (close relay 1)
@@ -830,7 +830,7 @@ void loop() {
                 speak("Press 1 to retry");
                 speak("Press 0 to cancel");
 
-                delay(2000);
+                delay(15000);
 
                 //Speech Synthesis Chip code
                 digitalWrite(9, LOW);  // enable transmission on TX radio (close relay 1)
@@ -903,7 +903,7 @@ void loop() {
                     
                     speak("Committing Morse Code to EEProm");
 
-                    delay(2000);
+                    delay(6000);
 
                     //Speech Synthesis Chip code
                     digitalWrite(9, LOW);  // enable transmission on TX radio (close relay 1)
@@ -948,7 +948,7 @@ void loop() {
                     digitalWrite(10, HIGH);  // switch audio source to speech chip (close relay 2)
 
                     speak("Retrying");
-                    delay(2000);
+                    delay(4000);
 
                     //Speech Synthesis Chip code
                     digitalWrite(9, LOW);  // enable transmission on TX radio (close relay 1)
@@ -985,7 +985,11 @@ void loop() {
                     digitalWrite(10, HIGH);  // switch audio source to speech chip (close relay 2)
 
                     speak("Canceling");
-                    delay(2000);
+                    delay(4000);
+
+                    //Speech Synthesis Chip code
+                    digitalWrite(9, LOW);  // enable transmission on TX radio (close relay 1)
+                    digitalWrite(10, LOW);  // switch audio source to speech chip (close relay 2)
 
                     lcd.clear();
                     lcd.print("Canceling");
