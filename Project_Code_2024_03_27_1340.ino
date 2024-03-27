@@ -631,7 +631,7 @@ void loop() {
               digitalWrite(10, HIGH);  // switch audio source to speech chip (close relay 2)
               
               speak("Enter your callsign in Morse code, using 1 for dot, 2 for dash, 3 for space, and * to end. ");
-              delay(2000);
+              delay(15000);
 
               //Speech Synthesis Chip code
               digitalWrite(9, LOW);  // enable transmission on TX radio (close relay 1)
@@ -755,7 +755,7 @@ void loop() {
                   
 
 
-                  speak(new_callsign_string.charAt(i));
+                  speak(String(new_callsign_string.charAt(i)));
                   lcd.print(new_callsign_string.charAt(i));
                   
                   delay(1000);
@@ -826,9 +826,7 @@ void loop() {
                 digitalWrite(9, HIGH);  // enable transmission on TX radio (close relay 1)
                 digitalWrite(10, HIGH);  // switch audio source to speech chip (close relay 2)
 
-                speak("Press * to confirm");
-                speak("Press 1 to retry");
-                speak("Press 0 to cancel");
+                speak("Press * to confirm, Press 1 to retry, Press 0 to cancel");
 
                 delay(15000);
 
