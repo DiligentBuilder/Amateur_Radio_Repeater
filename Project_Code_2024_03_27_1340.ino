@@ -322,6 +322,18 @@ String readStringFromEEPROM(int addrOffset)
 
 void setup() {
 
+  // setting the pinMode of the LED pins to OUTPUT
+  pinMode(11, OUTPUT);
+  pinMode(12, OUTPUT);
+  pinMode(13, OUTPUT);
+
+  // leaving the LEDs on all the time
+  digitalWrite(11, HIGH);
+  digitalWrite(12, HIGH);
+  digitalWrite(13, HIGH);
+
+  
+
   // making the password 999999 for debugging purposes
 
   writeStringToEEPROM(0, "999999");
@@ -612,16 +624,7 @@ void loop() {
             // clearing buffer
             // addCharToBuffer("#");
 
-            
-
-
-            while (1) {
-           
-
-            
-             
-
-              // prompt the user with speech prompts
+            // prompt the user with speech prompts
 
               //Speech Synthesis Chip code
               digitalWrite(9, HIGH);  // enable transmission on TX radio (close relay 1)
@@ -636,13 +639,27 @@ void loop() {
 
               lcd.clear();
               lcd.print("Enter callsign");
-              //delay(3000);
+              delay(3000);
 
               lcd.clear();              
               lcd.print("1 dot 2 dash 3 space");
               lcd.setCursor(0, 1);
               lcd.print("# to start over");
 
+              delay(1000);
+
+
+
+            
+
+
+            while (1) {
+           
+
+            
+             
+
+              
 
               if (actionState == HIGH) {
         
@@ -729,19 +746,30 @@ void loop() {
                 lcd.setCursor(0, 1);
                 
 
+                //Speech Synthesis Chip code
+                digitalWrite(9, HIGH);  // enable transmission on TX radio (close relay 1)
+                digitalWrite(10, HIGH);  // switch audio source to speech chip (close relay 2)
 
                 for (int i = 0; i < new_callsign_string.indexOf("*"); i++) {
 
-                  //Speech Synthesis Chip code
-                  digitalWrite(9, HIGH);  // enable transmission on TX radio (close relay 1)
-                  digitalWrite(10, HIGH);  // switch audio source to speech chip (close relay 2)
+                  
 
 
                   speak(new_callsign_string.charAt(i));
-                  delay(2000);
-                  
                   lcd.print(new_callsign_string.charAt(i));
+                  
+                  delay(1000);
+
+                 
+                  
                 }
+
+                //Speech Synthesis Chip code
+                digitalWrite(9, LOW);  // enable transmission on TX radio (close relay 1)
+                digitalWrite(10, LOW);  // switch audio source to speech chip (close relay 2)
+
+                
+                
 
                 delay(3000);
 
