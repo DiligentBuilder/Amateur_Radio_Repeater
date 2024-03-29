@@ -388,14 +388,14 @@ String returnBufferContents() {
 }
 
 void loop() {
-      // check if reset password button is depressed
+      // check if reset PIN button is depressed
       if(digitalRead(A3) == 0)
       {
         lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print("Hold for 3 s");
         lcd.setCursor(0, 1);
-        lcd.print("To reset PWD");
+        lcd.print("To reset PIN");
 
         unsigned int counter = 0;
 
@@ -410,7 +410,7 @@ void loop() {
             writeStringToEEPROM(0, "123456");
             lcd.clear();
             lcd.setCursor(0, 0);
-            lcd.print("PWD reset");
+            lcd.print("PIN reset");
             lcd.setCursor(0, 1);
             lcd.print("to 123456");
             delay(3000);
