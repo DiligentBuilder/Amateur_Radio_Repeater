@@ -1130,7 +1130,7 @@ void loop() {
         digitalWrite(10, HIGH);  // switch audio source to speech chip (close relay 2)
 
         //speak("[x0][t6][v8][s6][m51][g2][h2][n1]K 3 A U K");  // send command to speech chip to say callsign
-        delay(250);
+        delay(1000);
         transmitMorseCode(morseCode.c_str());
         delay(250);
         digitalWrite(10, LOW);  // switch audio source back to input radio
