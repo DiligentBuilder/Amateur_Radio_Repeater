@@ -832,12 +832,7 @@ void loop() {
                   delay(1000);
                 }
 
-                //Speech Synthesis Chip code
-                delay(1000);
-
-                speak("[x0][t6][v8][s6][m51][g2][h2][n1]The Morse code of your callsign is: ");
-
-                delay(5000);
+                
 
                 
 
@@ -859,6 +854,12 @@ void loop() {
 
                 MorseCodeNumbersToCharacters(new_callsign_string, curr_callsign_string_chars);
 
+                // give verbal confirmation of the new callsign characters
+                // send command to speech chip to say current callsign converted to characters by function
+                speak(strcat("[x0][t6][v8][s6][m51][g2][h2][n1]", curr_callsign_string_chars.c_str()));    
+                delay(10000);
+        
+
             
                 lcd.clear();
 
@@ -869,6 +870,15 @@ void loop() {
                 lcd.print(curr_callsign_string_chars);
 
                 delay(3000);
+
+                
+
+                //Speech Synthesis Chip code
+                delay(1000);
+
+                speak("[x0][t6][v8][s6][m51][g2][h2][n1]The Morse code of your callsign is: ");
+
+                delay(5000);
 
                 
 
