@@ -10,142 +10,181 @@ void MorseCodeNumbersToCharacters(String new_callsign_string, String &curr_calls
 
   char character;
 
-  bool error;
+  bool error = false;
+
+  String character_string;
 
 
   
 
   for (int i = 0; i < new_callsign_string.length(); i++) {
-    if (new_callsign_string.charAt(i) != "3") {
-      sub_string += new_callsign_string.charAt(i);
+
+    
+    
+
+
+    if (new_callsign_string[i] != '3') {
+
+      // there is not a space
+      sub_string += new_callsign_string[i];
 
 
     }
     else {
+
+      // there is a space
+      
       switch (sub_string.toInt()) {
-        case 01:
-          character = "A";
+        case 12:
+          character = 'A';
           break;
-        case 1000:
-          character = "B";
+        case 2111:
+          character = 'B';
           break;
-        case 1010:
-          character = "C";
+        case 2121:
+          character = 'C';
           break;
-        case 100:
-          character = "D";
+        case 211:
+          character = 'D';
           break;
-        case 0:
-          character = "E";
+        case 1:
+          character = 'E';
           break;
-        case 0010:
-          character = "F";
+        case 1121:
+          character = 'F';
           break;
-        case 110:
-          character = "G";
+        case 221:
+          character = 'G';
           break;
         case 1111:
-          character = "H";
+          character = 'H';
           break;
         case 11:
-          character = "I";
+          character = 'I';
           break;
-        case 0110:
-          character = "J";
+        case 1222:
+          character = 'J';
           break;
-        case 101:
-          character = "K";
+        case 212:
+          character = 'K';
           break;
-        case 0100:
-          character = "L";
+        case 1211:
+          character = 'L';
           break;
         case 22:
-          character = "M";
+          character = 'M';
           break;
         case 21:
-          character = "N";
+          character = 'N';
           break;
         case 222:
-          character = "O";
+          character = 'O';
           break;
         case 1221:
-          character = "P";
+          character = 'P';
           break;
         case 2212:
-          character = "Q";
+          character = 'Q';
           break;
         case 121:
-          character = "R";
+          character = 'R';
           break;
         case 111:
-          character = "S";
+          character = 'S';
           break;
         case 2:
-          character = "T";
+          character = 'T';
           break;
         case 112:
-          character = "U";
+          character = 'U';
           break;
         case 1112:
-          character = "V";
+          character = 'V';
           break;
         case 122:
-          character = "W";
+          character = 'W';
           break;
         case 2112:
-          character = "X";
+          character = 'X';
           break;
         case 2122:
-          character = "Y";
+          character = 'Y';
           break;
         case 2211:
-          character = "Z";
+          character = 'Z';
           break;
         case 12222:
-          character = "1";
+          character = '1';
           break;
         case 11222:
-          character = "2";
+          character = '2';
           break;
         case 11122:
-          character = "3";
+          character = '3';
           break;
         case 11112:
-          character = "4";
+          character = '4';
           break;
         case 11111:
-          character = "5";
+          character = '5';
           break;
         case 21111:
-          character = "6";
+          character = '6';
           break;
         case 22111:
-          character = "7";
+          character = '7';
           break;
         case 22211:
-          character = "8";
+          character = '8';
           break;
         case 22221:
-          character = "9";
+          character = '9';
           break;
         case 22222:
-          character = "0";
+          character = '0';
           break;
         default:
           error = true;
           break;
+
+
+        
           
       }
 
+      character_string += character; 
+        
+      sub_string = "";
+
+      
       // Detect if there is an error (if it entered the default case, which means that it did not match any of the valid letters or numbers)
 
       if (error) {
-        return "ERROR";
+        character_string = "ERROR";
+        break;
       }
 
 
-      curr_callsign_string_chars += character;
+      
       
     }
+
+    // save final character string to the String reference after all the characters of the character string has been calculated
+    curr_callsign_string_chars = character_string;
+
+    
+    
   }
+
+  // Code for Debugging Purposes
+
+  //lcd.clear();
+
+  //lcd.print("Characters");
+
+    
+
+
+  //lcd.print(curr_callsign_string_chars);
+  //delay(3000);
 }

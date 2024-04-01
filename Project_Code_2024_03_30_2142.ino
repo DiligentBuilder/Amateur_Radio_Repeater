@@ -1,5 +1,10 @@
 #include <LiquidCrystal_I2C.h> // library for LCD
 
+
+LiquidCrystal_I2C lcd(0x27,16,2);  // I2C address of LCD chip is 0x27. LCD is 16 chars and 2 lines.
+
+
+
 #include "String.h"
 
 //#include "phoneticAlphabet.h"
@@ -114,7 +119,6 @@ int fifteenSecondCounter = 0;
 
 
 
-LiquidCrystal_I2C lcd(0x27,16,2);  // I2C address of LCD chip is 0x27. LCD is 16 chars and 2 lines.
 
 void speak(char* msg) {
   Serial.write(0xFD);
@@ -555,8 +559,22 @@ void loop() {
             digitalWrite(10, HIGH);  // switch audio source to speech chip (close relay 2)
             delay(1000);
 
+            curr_callsign_string_chars = readStringFromEEPROM(40);
+
+            
+            lcd.clear();
+
+            lcd.print("Current Callsign: ");
+
+            lcd.setCursor(0, 1);
+
+            lcd.print(curr_callsign_string_chars);
+
             // send command to speech chip to say current callsign converted to characters by function
             speak(strcat("[x0][t6][v8][s6][m51][g2][h2][n1]", curr_callsign_string_chars.c_str()));  
+
+            delay(10000);
+            
         
             // once we have the Morse code string, we will play the Morse code back through the PWM pin on the ATMega
             transmitMorseCode(morseCode.c_str());
@@ -821,8 +839,7 @@ void loop() {
 
                 delay(5000);
 
-                lcd.clear();
-                lcd.print("Callsign Morse code:");
+                
 
                 String morse_code_string = "";
 
@@ -840,16 +857,36 @@ void loop() {
                   }
                 }
 
-                //Speech Synthesis Chip code
-                delay(200);
-                // once we have the Morse code string, we will play the Morse code back through the PWM pin on the ATMega
-                transmitMorseCode(morse_code_string.c_str());
+                MorseCodeNumbersToCharacters(new_callsign_string, curr_callsign_string_chars);
+
+            
+                lcd.clear();
+
+                lcd.print("Callsign Characters: ");
+
+                lcd.setCursor(0, 1);
+
+                lcd.print(curr_callsign_string_chars);
+
+                delay(3000);
+
+                
 
                 // print the morse code on the LCD display
+
+                lcd.clear();
+                lcd.print("Callsign Morse code:");
+
+
                 lcd.setCursor(0, 1);
                 lcd.print(morse_code_string);
 
                 delay(3000);
+
+                //Speech Synthesis Chip code
+                delay(200);
+                // once we have the Morse code string, we will play the Morse code back through the PWM pin on the ATMega
+                transmitMorseCode(morse_code_string.c_str());
 
 
 
@@ -953,6 +990,10 @@ void loop() {
 
                     // writing string to non-volatile memory
                     writeStringToEEPROM(7, morse_code_string);
+
+                    // writing character string to non-volatile memory
+                    writeStringToEEPROM(40, curr_callsign_string_chars);
+                    
 
                     // updating the callsign string variable
                     morseCode = readStringFromEEPROM(7);
@@ -1151,11 +1192,13 @@ void loop() {
         digitalWrite(10, HIGH);  // switch audio source to speech chip (close relay 2)
 
         //speak("[x0][t6][v8][s6][m51][g2][h2][n1]K 3 A U K");  // send command to speech chip to say callsign
+
+        curr_callsign_string_chars = readStringFromEEPROM(40);
         
         // send command to speech chip to say current callsign converted to characters by function
         speak(strcat("[x0][t6][v8][s6][m51][g2][h2][n1]", curr_callsign_string_chars.c_str()));    
         
-        delay(1000);
+        delay(10000);
         
         transmitMorseCode(morseCode.c_str());
         
