@@ -554,10 +554,7 @@ void loop() {
             // passwords ARE equal!
             lcd.backlight();  // enable LCD backlight
 
-            //Speech Synthesis Chip code
-            enableTX();
-            digitalWrite(10, HIGH);  // switch audio source to speech chip (close relay 2)
-            delay(1000);
+            
 
             curr_callsign_string_chars = readStringFromEEPROM(40);
 
@@ -569,9 +566,19 @@ void loop() {
             lcd.setCursor(0, 1);
 
             lcd.print(curr_callsign_string_chars);
+            
+
+            //Speech Synthesis Chip code
+            enableTX();
+            digitalWrite(10, HIGH);  // switch audio source to speech chip (close relay 2)
+            delay(1000);
+
+            char charmessage[] = "[x0][t6][v8][s6][m51][g2][h2][n1]";
+
+            strcat(charmessage, curr_callsign_string_chars.c_str());
 
             // send command to speech chip to say current callsign converted to characters by function
-            speak(strcat("[x0][t6][v8][s6][m51][g2][h2][n1]", curr_callsign_string_chars.c_str()));  
+            speak(charmessage);  
 
             delay(10000);
             
@@ -855,8 +862,12 @@ void loop() {
                 MorseCodeNumbersToCharacters(new_callsign_string, curr_callsign_string_chars);
 
                 // give verbal confirmation of the new callsign characters
+                char charmessage[] = "[x0][t6][v8][s6][m51][g2][h2][n1]";
+
+                strcat(charmessage, curr_callsign_string_chars.c_str());
+
                 // send command to speech chip to say current callsign converted to characters by function
-                speak(strcat("[x0][t6][v8][s6][m51][g2][h2][n1]", curr_callsign_string_chars.c_str()));    
+                speak(charmessage);   
                 delay(10000);
         
 
@@ -1205,8 +1216,12 @@ void loop() {
 
         curr_callsign_string_chars = readStringFromEEPROM(40);
         
+        char charmessage[] = "[x0][t6][v8][s6][m51][g2][h2][n1]";
+
+        strcat(charmessage, curr_callsign_string_chars.c_str());
+
         // send command to speech chip to say current callsign converted to characters by function
-        speak(strcat("[x0][t6][v8][s6][m51][g2][h2][n1]", curr_callsign_string_chars.c_str()));    
+        speak(charmessage);    
         
         delay(10000);
         
