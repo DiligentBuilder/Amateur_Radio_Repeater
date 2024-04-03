@@ -175,7 +175,7 @@ void MorseCodeNumbersToCharacters(String new_callsign_string, String &curr_calls
 
   // decode the final character if there is one
 
-  if (strlen(sub_string.c_str()) > 0) {
+  if (sub_string.length() > 0) {
   
     switch (sub_string.toInt()) {
       case 12:
@@ -310,15 +310,15 @@ void MorseCodeNumbersToCharacters(String new_callsign_string, String &curr_calls
 
   // Code for Debugging Purposes
 
-  //lcd.clear();
+  lcd.clear();
 
-  //lcd.print("Characters");
+  lcd.print("Characters");
 
     
 
 
-  //lcd.print(curr_callsign_string_chars);
-  //delay(3000);
+  lcd.print(curr_callsign_string_chars);
+  delay(3000);
 
 
   // save final character string to the String reference after all the characters of the character string has been calculated
