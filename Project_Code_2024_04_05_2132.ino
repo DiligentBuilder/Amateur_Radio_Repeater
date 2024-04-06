@@ -611,10 +611,12 @@ void loop() {
 
               addCharToBuffer("#");
 
+            unsigned int timeOutCnt1 = 0;  // time out counter
 
             while (1) {
           
               if (actionState == HIGH) {
+                timeOutCnt1 = 0;  // reset time out counter
 
                 addCharToBuffer(DTMFget());
 
@@ -697,13 +699,10 @@ void loop() {
                 delay(1000);
 
                 // clearing buffer
-                addCharToBuffer("#");
-
+                buffer_string = "";
 
                 // prompt user
-
                 speak((spkStr + "Press star to confirm, pound to cancel").c_str());
-                // speak("[x0][t6][v8][s6][m51][g2][h2][n1]Press star to confirm, Press 1 to retry, Press 0 to cancel");
 
                 lcd.clear();
                 lcd.setCursor(0, 0);
@@ -716,7 +715,7 @@ void loop() {
                 disableTX();  // disable transmission
                 digitalWrite(10, LOW);  // switch audio source to speech chip (close relay 2)
 
-
+                unsigned int timeOutCnt2 = 0;  // time out counter
 
                 while (1) {
 
@@ -734,7 +733,7 @@ void loop() {
 
                   }
                   
-
+                  // if confirm selected (user enters "*")
                   if (buffer_string.indexOf("*") != -1) {
 
                     //Speech Synthesis Chip code
@@ -775,8 +774,8 @@ void loop() {
 
                   }
 
-
-                  if (buffer_string.indexOf("#") != -1) {
+                  // if cancel selected (user enters "#") or time out condition occurs
+                  if ((buffer_string.indexOf("#") != -1) or (timeOutCnt2 > 20000)) {
 
                     //Speech Synthesis Chip code
                     enableTX();  // enable transmission on TX radio (close relay 1)
@@ -801,8 +800,31 @@ void loop() {
                     software_reboot();  // reboot to break out of loops and clean up RAM
                     
                   }
+
+                  delay(1);  // delay 1 ms
+                  timeOutCnt2++;  // increase time out counter
+
                 }
               }
+
+              delay(1);  // delay by 1 ms
+              timeOutCnt1++;  // increment time out counter
+
+              // if time out condition occurs
+              if(timeOutCnt1 > 20000) {  // 20 s elapsed with no input
+                enableTX();  // enable transmission on TX radio (close relay 1)
+                digitalWrite(10, HIGH);  // switch audio source to speech chip (close relay 2)
+
+                delay(1000);
+                speak((spkStr + "Time out").c_str());
+                delay(2000);
+
+                disableTX();  // disable transmission
+                digitalWrite(10, LOW);  // switch audio source back to radio input (open relay 2)
+
+                software_reboot();  // reboot to break out of loops and clean up RAM
+              }
+              
             }
           }
 
